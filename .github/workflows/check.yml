@@ -1,0 +1,31 @@
+name: PEP-8 Style Check
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  pep8-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies from requirements.txt
+        run: pip install -r requirements.txt
+
+      - name: Install pycodestyle (pre-install step)
+        run: pip install pycodestyle
+
+      - name: Run PEP-8 check script
+        run: |
+          echo "Running pycodestyle on all .py files..."
+          python check_pep8.py
